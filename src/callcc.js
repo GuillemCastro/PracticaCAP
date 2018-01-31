@@ -1,19 +1,15 @@
-function callcc(f) {
-	var k = new Continuation();
-	return f(k);
+function someFunction()  {
+    var kont  = new  Continuation();
+    print("captured: " + kont);
+    return kont;
 }
 
-var cont;
-function test(a) {
-	cont = a;
-	return 'First execution';
+var k = someFunction();
+if (k instanceof Continuation) {
+    print("k is a continuation");
+    k(200);
 }
-
-var newTest = callcc(test);
-if (newTest === 'First execution') {
-	cont(1);
-} else if (newTest === 1) {
-	print('El resultat es correcte.');
-} else {
-	print('El call/cc no funciona')
+else {
+    print("k is now a " + typeof(k));
 }
+print(k);
